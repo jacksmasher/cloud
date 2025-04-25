@@ -2,14 +2,14 @@ const express = require('express');
 const simpleGit = require('simple-git');
 const path = require('path');
 const fs = require('fs');
+const serveIndex = require('serve-index');
 const app = express();
 const port = process.env.PORT || 3000;
 
 const git = simpleGit();
-const repoPath = path.join(__dirname, 'repo');  // Directory to clone the repo
+const repoPath = path.join(__dirname, 'repo');
 const repoUrl = 'https://github.com/jacksmasher/cloud.git';
 
-// Clone or pull the GitHub repo
 async function syncRepo() {
   try {
     if (!fs.existsSync(repoPath)) {
@@ -24,7 +24,6 @@ async function syncRepo() {
   }
 }
 
-// Root route — to avoid "Cannot GET /"
 app.get('/', (req, res) => {
   res.send(`
     <h1>☁️ Cloud File Server</h1>
@@ -33,8 +32,9 @@ app.get('/', (req, res) => {
   `);
 });
 
-// Serve files from the 'data' folder inside the repo
-app.use('/data', express.static(path.join(repoPath, 'data')));
+// Enable file serving + folder browsing
+const dataPath = path.join(repoPath, 'data');
+app.use('/data', express.static(dataPath), serveIndex(dataPath, { icons: true }));
 
 app.listen(port, async () => {
   console.log(`🚀 Server is running on port ${port}`);
