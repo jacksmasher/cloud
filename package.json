@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/jacksmasher/cloud/issues"
   },
-  "homepage": "https://github.com/jacksmasher/cloud#readme"
+  "homepage": "https://github.com/jacksmasher/cloud#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
