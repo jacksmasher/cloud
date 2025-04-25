@@ -11,7 +11,7 @@ const repoPath = path.join(__dirname, 'repo');  // Directory to clone the repo
 // Clone the GitHub repo on server startup
 async function cloneRepo() {
   if (!fs.existsSync(repoPath)) {
-    await git.clone('https://github.com/jacksmasher/cloud.git ', repoPath);
+    await git.clone('https://github.com/jacksmasher/cloud.git', repoPath);
   } else {
     await git.pull();
   }
